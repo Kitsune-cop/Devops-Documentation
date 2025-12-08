@@ -1,0 +1,61 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: buildkitd
+  namespace: devops-tools
+  labels:
+    app: buildkitd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: buildkitd
+  template:
+    metadata:
+      labels:
+        app: buildkitd
+    spec:
+      serviceAccountName: jenkins-admin
+      containers:
+        - name: buildkitd
+          image: moby/buildkit:v0.12.5 # Use a specific, stable version
+          args:
+            - --addr
+            - tcp://0.0.0.0:1234
+          ports:
+            - containerPort: 1234
+          # This is the 'rootless' mode, which is more secure.
+          # It does not require privileged pods.
+          securityContext:
+            privileged: true
+          # securityContext:
+          #   seccompProfile:
+          #     type: Unconfined
+          # securityContext:
+          #   runAsUser: 1000
+          #   runAsGroup: 1000
+          #   allowPrivilegeEscalation: false
+          #   readOnlyRootFilesystem: true
+          resources:
+            limits:
+              memory: "2Gi"
+              cpu: "1000m"
+            requests:
+              memory: "500Mi"
+              cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: buildkitd
+  namespace: devops-tools
+  labels:
+    app: buildkitd
+spec:
+  type: ClusterIP
+  ports:
+    - port: 1234
+      protocol: TCP
+  selector:
+    app: buildkitd
