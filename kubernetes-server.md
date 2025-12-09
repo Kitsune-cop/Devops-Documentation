@@ -1,10 +1,12 @@
-# Install Kubernetes
-install in every server you have
+# Setup Control plane server
+
+### Install Kubernetes
+install in every server
 
 ```
 sudo snap install microk8s --classic
 ```
-On machine you assign as main
+On machine you assign as main for control plane
 * check microk8s status
 ```
 sudo microk8s status
@@ -53,7 +55,7 @@ $Env:KUBECONFIG = "C:\Users\YourUser\.kube\config"
 ```
 export KUBECONFIG="/path/to/your/kubeconfig.yaml"
 ```
-Enable feature
+#### Enable feature
 ```
 sudo microk8s enable metrics-server
 
@@ -63,13 +65,18 @@ sudo microk8s enable storage
 
 sudo microk8s enable metallb
 ```
-Get kubernetes token
+#### Get kubernetes token
 ```
 kubectl describe secret -n kube-system microk8s-dashboard-token
 ```
-Launch Dashboard
+#### Launch Dashboard
 ```
 kubectl port-forward -n kube-system service/kubernetes-dashboard 10443:443
 ```
-Access via:
+##### Access via:
 `https://localhost:10443`
+
+#### Set Loadbalancer
+```
+sudo microk8s enable metallb:<ip-address>- <ip-address>
+```

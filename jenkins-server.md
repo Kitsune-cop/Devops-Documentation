@@ -1,21 +1,23 @@
-# Install kubectl
+# Set up Jenkins Server
+
+### Install kubectl
 
 ```
 sudo snap install kubectl --classic
 ```
 
-# Install microk8s
+### Install microk8s
 
 ```
 sudo snap install microk8s --classic
 ```
-Check microk8s status
+### Check microk8s status
 
 ```
 sudo microk8s status
 ```
 
-Get microk8s config
+### Get microk8s config
 ```
 sudo microk8s config
 # copy config
@@ -37,7 +39,7 @@ $Env:KUBECONFIG = "C:\Users\YourUser\.kube\config"
 ```
 export KUBECONFIG="/path/to/your/kubeconfig.yaml"
 ```
-Enable feature
+#### Enable feature
 ```
 sudo microk8s enable metrics-server
 
@@ -45,19 +47,37 @@ sudo microk8s enable dashboard
 
 sudo microk8s enable dns
 ```
-Get kubernetes token
+#### Get kubernetes token
 ```
 kubectl describe secret -n kube-system microk8s-dashboard-token
 ```
-Launch Dashboard
+#### Launch Dashboard
 ```
 kubectl port-forward -n kube-system service/kubernetes-dashboard 10443:443
 ```
-Access via:
+##### Access via:
 `https://localhost:10443`
 
-Deploy Jenkins
+#### Deploy Jenkins
 > in jenkins folder
 ```
     kubectl apply <file-name>.yml
 ```
+
+#### Set Loadbalancer
+```
+sudo microk8s enable metallb:<ip-address>- <ip-address>
+```
+
+##### Plugins
+* Pipeline: Stage View
+* Kubernetes
+* SonarQube Scanner
+* Build Monitor View
+
+##### Create Cloud
+
+> Go to setting -> Clouds -> New cloud (name same as in jenkins config file)
+
+##### Create Pod template
+> Clouds -> setting -> Pod template -> add pod template (name same as in jenkins config file)
