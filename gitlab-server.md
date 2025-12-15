@@ -21,7 +21,7 @@ sudo mkdir gitlab
 ```
 services:
   gitlab:
-    image: gitlab/gitlab-ce:18.6.1-ce.0
+    image: gitlab/gitlab-ce:18.6.2-ce.0
     container_name: gitlab
     restart: always
     hostname: '<gitlab-domain-name>'
