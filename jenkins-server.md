@@ -46,6 +46,8 @@ sudo microk8s enable metrics-server
 sudo microk8s enable dashboard
 
 sudo microk8s enable dns
+
+sudo microk8s enable storage
 ```
 #### Get kubernetes token
 ```
@@ -61,7 +63,7 @@ kubectl port-forward -n kube-system service/kubernetes-dashboard 10443:443
 #### Deploy Jenkins
 > in jenkins folder
 ```
-    kubectl apply <file-name>.yml
+    kubectl apply -f <file-name>.yml
 ```
 
 #### Set Loadbalancer
