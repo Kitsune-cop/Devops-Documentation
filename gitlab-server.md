@@ -13,7 +13,7 @@ sudo snap install docker --classic
 - create folder gitlab
 
 ```
-sudo mkdir gitlab-server
+sudo mkdir gitlab
 ```
 - gitlab version list : [https://gitlab-com.gitlab.io/support/toolbox/upgrade-path/](https://gitlab-com.gitlab.io/support/toolbox/upgrade-path/)
 - create file `/home/<user>/gitlab/docker-compose.yml`
